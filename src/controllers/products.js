@@ -32,7 +32,7 @@ async function post(req, res) {
     product.save()
 
     res.send({
-        message: 'sucess'
+        message: 'success'
     })
     
 }
@@ -43,7 +43,7 @@ async function put(req, res) {
     const product = await ProductsModel.findOneAndUpdate({ _id: id }, req.body, { new: true })  // quando obrigatório retornar o produto
 
     res.send({
-        message: 'sucess',
+        message: 'success',
         product,
     })
 
@@ -59,8 +59,27 @@ async function put(req, res) {
     */
 }
 
+async function remove(req, res) {
+    const { id } = req.params
+
+    const remove = await ProductsModel.deleteOne({ _id: id })
+
+    let message = 'success'
+
+    if (!remove.ok) {
+        message: 'error'
+    }
+
+    //const message = remove.ok ? 'success' : 'error' // O IF TERNÁRIOO NO MEU POSTMAN NÃO FUNCIONOU CORRETAMENTE. ME RETORNOU A MENSAGEM DE ERRO AO INVÉS DE SUCESSO!
+
+    res.send({
+        message: 'success'
+    })
+}
+
 module.exports = {
     get,
     post,
     put,
+    remove,
 }
